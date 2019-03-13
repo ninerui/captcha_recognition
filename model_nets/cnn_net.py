@@ -2,6 +2,15 @@ import tensorflow as tf
 
 
 def crack_captcha_cnn(X, output_node, w_alpha=0.01, b_alpha=0.1, keep_prob=1.0):
+    """
+    网络构建
+    :param X:
+    :param output_node:
+    :param w_alpha:
+    :param b_alpha:
+    :param keep_prob:
+    :return:
+    """
     w_c1 = tf.Variable(w_alpha * tf.random_normal([3, 3, 1, 32]))
     b_c1 = tf.Variable(b_alpha * tf.random_normal([32]))
     conv1 = tf.nn.relu(tf.nn.bias_add(tf.nn.conv2d(X, w_c1, strides=[1, 1, 1, 1], padding='SAME'), b_c1))

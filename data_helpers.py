@@ -20,6 +20,12 @@ def random_captcha_text(char_set, captcha_size=4):
 
 
 def gen_captcha_text_and_image(char_set, captcha_size=4):
+    """
+    通过captcha生成rgb的验证码图片
+    :param char_set:
+    :param captcha_size:
+    :return:
+    """
     image = ImageCaptcha()
 
     captcha_text = random_captcha_text(char_set, captcha_size=captcha_size)
@@ -34,6 +40,11 @@ def gen_captcha_text_and_image(char_set, captcha_size=4):
 
 
 def convert2gray(img):
+    """
+    rgb image to 灰度图
+    :param img: 原始图像
+    :return: 灰度之后的图像
+    """
     if len(img.shape) > 2:
         # gray = np.mean(img, -1)
         # 上面的转法较快，正规转法如下
@@ -45,6 +56,12 @@ def convert2gray(img):
 
 
 def text2vec(text, output_node):
+    """
+    标签转为我们需要的label
+    :param text: 标签文本
+    :param output_node: 我们需要输出的label层元素个数
+    :return: one_hot类似的label
+    """
     # text_len = len(text)
     # if text_len > MAX_CAPTCHA:
     #     raise ValueError('验证码最长4个字符')
@@ -70,8 +87,16 @@ def text2vec(text, output_node):
     return vector
 
 
-# 生成一个训练batch
 def get_next_batch(char_set, captcha_size, image_shape, label_shape, batch_size=128):
+    """
+    生成一个训练batch
+    :param char_set: 获取字符的set集
+    :param captcha_size: 验证码的数字位数
+    :param image_shape: 图像的shape
+    :param label_shape: 标签的shape
+    :param batch_size: 批大小
+    :return: 每批数据的data和label
+    """
     batch_x = np.zeros([batch_size, image_shape[0], image_shape[1], image_shape[2]])
     batch_y = np.zeros([batch_size, label_shape[0]])
 

@@ -15,6 +15,7 @@ if __name__ == '__main__':
     print("验证码图像channel:", image.shape)  # (60, 160, 3)
     image_height, image_width, image_channel = image.shape
     image_shape = (image_height, image_width, 1)
+    # 展示图片
     f = plt.figure()
     ax = f.add_subplot(111)
     ax.text(0.1, 0.9, text, ha='center', va='center', transform=ax.transAxes)
@@ -30,7 +31,7 @@ if __name__ == '__main__':
     saver = tf.train.Saver()
     with tf.Session() as sess:
         saver.restore(sess, "./save_models/crack_capcha.model-1710")
-
+        # 获取预测结果
         predict = tf.argmax(tf.reshape(output, [-1, 4, 10]), 2)
         text_list = sess.run(predict, feed_dict={X: [image]})
         predict_text = text_list[0].tolist()
